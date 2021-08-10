@@ -88,6 +88,8 @@ function getColor4Marker(d) {
     else {c = "#ff6167"}
     return c;
 }
+
+// Creating function to output color value to be used in legend based on given intervals
 function getColor4Legend(d) {
     var c;
     if (d == "<10") { 
@@ -101,26 +103,16 @@ function getColor4Legend(d) {
     return c;
 }
 
-
-
-// function creteMarker(data) {
-//     // extracting data for magnitude and depth of the recordered earthquake
-//     var mag = data.features[i].properties.mag
-//     var d   = data.features[i].geometry.coordinates[2]
-
-//     // console.log(`Q ${i}\tmag = ${mag[i]}\td = ${d[i]}`)
-
-// }
-
-
-
-
-
-
 // ----------------------------------------------- FILTER/CONTROL SETUP ---------------------------------------------
+// Add stelite data layer (dark)
+var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
 // Set up basemap variable
 var baseMap = {
-    "Deafault" : bgLayer
+    "Default" : bgLayer,
+    "Satellite": Esri_WorldImagery
 }
 
 L.control.layers(baseMap).addTo(myMap)
