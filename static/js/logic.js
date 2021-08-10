@@ -56,14 +56,14 @@ d3.json(usgs_url).then(data => {
     legend.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info legend');
-    labels = ['<strong>Depth</strong>'],
+    labels = ['<center><strong">Depth</strong></center>'],
     categories = ['<10','10 - 30','30 - 50','50 - 70','70 - 90', '90+'];
 
     for (var i = 0; i < categories.length; i++) {
 
             div.innerHTML += 
             labels.push(
-                '<i id="square" style="background:' + getColor4Legend(categories[i]) + '"></i> ' +
+                '<div id="legend" style="background: white"><i id="square" style="background:' + getColor4Legend(categories[i]) + '"></i></div>' +
             (categories[i] ? categories[i] : '+'));
 
         }

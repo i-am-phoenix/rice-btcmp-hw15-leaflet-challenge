@@ -9,11 +9,12 @@ html {
   height: 100%;
 }
 
-
 #square {
   width: 20px;
   height: 10px;
   background: red;
+  margin-left: 15px;
+  margin-top: 3px;
 }
 
 .legend {
@@ -22,8 +23,18 @@ html {
 }
 .legend i {
   width: 18px;
-  height: 18px;
+  height: 20px;
   float: left;
   margin-right: 8px;
   opacity: 0.7;
+}
+
+.legend {
+  background: white;
+  width:  100px;
+  /* text-align: center; */
+}
+
+#legendTitle {
+  text-align: center;
 }
