@@ -47,7 +47,7 @@ d3.json(usgs_url).then(data => {
             weight: 0.5,
             fillColor: getColor4Marker(d),
             fillOpacity: 0.7
-        }).bindPopup(`<strong>Magnitude &emsp;</strong> ${mag}<br><strong>Depth &emsp;</strong>${d}`).addTo(myMap);
+        }).bindPopup(`<h3>${data.features[i].properties.type} ${data.features[i].properties.place}</h3><hr><strong>Magnitude &emsp;</hr> ${mag}<br><strong>Depth &emsp;</strong>${d}`).addTo(myMap);
     };
     console.log(`d [${dmin};${dmax}]`) 
 
