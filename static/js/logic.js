@@ -26,6 +26,7 @@ d3.json(usgs_url).then(data => {
 
         // extracting data for magnitude and depth of the recordered earthquake
         var mag = data.features[i].properties.mag
+        // depth of the earth can be found as the third coordinate for each earthquake.
         var d   = data.features[i].geometry.coordinates[2]
         // console.log(`Q ${i}\tmag = ${mag}\td = ${d}`)
 
@@ -33,8 +34,11 @@ d3.json(usgs_url).then(data => {
         var lat = data.features[i].geometry.coordinates[1] // y
         var lon = data.features[i].geometry.coordinates[0] // x
         L.circle([lat, lon],{
-            radius: (mag),
-            color: "tab:blue"
+            radius: (mag)*10000,
+            color: "grey",
+            weight: 0.3,
+            fillColor: "blue",
+            fillOpacity: 0.3
         }).addTo(myMap);
     }; 
 });
