@@ -2,7 +2,7 @@
 usgs_url ="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
 // Set up map object
-var myMap = L.map("myMap", {
+var myMap = L.map("map", {
     center: [29.749907, -95.358421], // Houston :)
     zoom: 16
     }
