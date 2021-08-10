@@ -4,7 +4,7 @@ usgs_url ="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.ge
 // Set up map object
 var myMap = L.map("map", {
     center: [37.773972, -122.431297], // San Francisco, Ca :)
-    zoom:4
+    zoom: 5
     }
 )
 
@@ -19,8 +19,9 @@ var bgLayer = L.tileLayer(
 // Read in geojson info
 d3.json(usgs_url).then(data => {
     
-    console.log(data)
-    
+    console.log(data) 
+    var dmin = 0 
+    var dmax = 0
     //cycling through features
     for (i=1; i < data.features.length; i++) {
 
@@ -30,18 +31,41 @@ d3.json(usgs_url).then(data => {
         var d   = data.features[i].geometry.coordinates[2]
         // console.log(`Q ${i}\tmag = ${mag}\td = ${d}`)
 
+        // find out max depth recorded
+        if (d < dmin) {
+            dmin = d
+        } 
+        else if (d > dmax) {
+            dmax = d
+        }
+
         // create a marker/circle for the processed data point
         var lat = data.features[i].geometry.coordinates[1] // y
         var lon = data.features[i].geometry.coordinates[0] // x
         L.circle([lat, lon],{
-            radius: (mag)*10000,
+            radius: (mag)*25000,
             color: "grey",
-            weight: 0.3,
-            fillColor: "blue",
-            fillOpacity: 0.3
-        }).addTo(myMap);
-    }; 
+            weight: 0.5,
+            fillColor: getColor(d),
+            fillOpacity: 0.7
+        }).bindPopup(`<strong>Magnitude &emsp;</strong> ${mag}<br><strong>Depth &emsp;</strong>${d}`).addTo(myMap);
+    };
+    console.log(`d [${dmin};${dmax}]`) 
 });
+
+// Creating function to output color value based on depth range
+function getColor(d) {
+    var c;
+    if (d<10) { 
+        c = "#a4f600"; 
+    }
+    else if (d<30) { c = "#dcf400" }
+    else if (d<50) {c = "#f7db11"}
+    else if (d<70) {c = "#fdb72a"}
+    else if (d<90) {c = "#fca05d"}
+    else {c = "#ff6167"}
+    return c;
+}
 
 
 // function creteMarker(data) {
