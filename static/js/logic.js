@@ -3,8 +3,8 @@ usgs_url ="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.ge
 
 // Set up map object
 var myMap = L.map("map", {
-    center: [29.749907, -95.358421], // Houston :)
-    zoom:5
+    center: [37.773972, -122.431297], // San Francisco, Ca :)
+    zoom:4
     }
 )
 
@@ -27,7 +27,15 @@ d3.json(usgs_url).then(data => {
         // extracting data for magnitude and depth of the recordered earthquake
         var mag = data.features[i].properties.mag
         var d   = data.features[i].geometry.coordinates[2]
-        console.log(`Q ${i}\tmag = ${mag}\td = ${d}`)
+        // console.log(`Q ${i}\tmag = ${mag}\td = ${d}`)
+
+        // create a marker/circle for the processed data point
+        var lat = data.features[i].geometry.coordinates[1] // y
+        var lon = data.features[i].geometry.coordinates[0] // x
+        L.circle([lat, lon],{
+            radius: (mag),
+            color: "tab:blue"
+        }).addTo(myMap);
     }; 
 });
 
