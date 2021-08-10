@@ -29,8 +29,7 @@ d3.json(usgs_url).then(data => {
         var mag = data.features[i].properties.mag
         // depth of the earth can be found as the third coordinate for each earthquake.
         var d   = data.features[i].geometry.coordinates[2]
-        // console.log(`Q ${i}\tmag = ${mag}\td = ${d}`)
-
+        
         // find out max depth recorded
         if (d < dmin) {
             dmin = d
@@ -46,15 +45,38 @@ d3.json(usgs_url).then(data => {
             radius: (mag)*25000,
             color: "grey",
             weight: 0.5,
-            fillColor: getColor(d),
+            fillColor: getColor4Marker(d),
             fillOpacity: 0.7
         }).bindPopup(`<strong>Magnitude &emsp;</strong> ${mag}<br><strong>Depth &emsp;</strong>${d}`).addTo(myMap);
     };
     console.log(`d [${dmin};${dmax}]`) 
+
+    // Adding legend to the plot, to be located in the bottom right corner of the map
+    var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function () {
+
+    var div = L.DomUtil.create('div', 'info legend');
+    labels = ['<strong>Depth</strong>'],
+    categories = ['<10','10 - 30','30 - 50','50 - 70','70 - 90', '90+'];
+
+    for (var i = 0; i < categories.length; i++) {
+
+            div.innerHTML += 
+            labels.push(
+                '<i id="square" style="background:' + getColor4Legend(categories[i]) + '"></i> ' +
+            (categories[i] ? categories[i] : '+'));
+
+        }
+        div.innerHTML = labels.join('<br>');
+    return div;
+    };
+    legend.addTo(myMap);
 });
 
+
+// --------------------------------------------- FUNCTIONS -----------------------------------------------------------------
 // Creating function to output color value based on depth range
-function getColor(d) {
+function getColor4Marker(d) {
     var c;
     if (d<10) { 
         c = "#a4f600"; 
@@ -66,6 +88,19 @@ function getColor(d) {
     else {c = "#ff6167"}
     return c;
 }
+function getColor4Legend(d) {
+    var c;
+    if (d == "<10") { 
+        c = "#a4f600"; 
+    }
+    else if (d == "10 - 30") { c = "#dcf400" }
+    else if (d == '30 - 50') {c = "#f7db11"}
+    else if (d == '50 - 70') {c = "#fdb72a"}
+    else if (d == '70 - 90') {c = "#fca05d"}
+    else {c = "#ff6167"}
+    return c;
+}
+
 
 
 // function creteMarker(data) {
@@ -76,6 +111,10 @@ function getColor(d) {
 //     // console.log(`Q ${i}\tmag = ${mag[i]}\td = ${d[i]}`)
 
 // }
+
+
+
+
 
 
 // ----------------------------------------------- FILTER/CONTROL SETUP ---------------------------------------------
