@@ -23,6 +23,7 @@ var baseMap = {
     "Deafault" : bgLayer
 }
 
+L.control.layers(baseMap).addTo(myMap)
 
 
    
