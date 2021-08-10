@@ -17,7 +17,29 @@ var bgLayer = L.tileLayer(
 ).addTo(myMap);
 
 // Read in geojson info
-d3.json(usgs_url).then(data => {console.log(data)})
+d3.json(usgs_url).then(data => {
+    
+    console.log(data)
+    
+    //cycling through features
+    for (i=1; i < data.features.length; i++) {
+
+        // extracting data for magnitude and depth of the recordered earthquake
+        var mag = data.features[i].properties.mag
+        var d   = data.features[i].geometry.coordinates[2]
+        console.log(`Q ${i}\tmag = ${mag}\td = ${d}`)
+    }; 
+});
+
+
+// function creteMarker(data) {
+//     // extracting data for magnitude and depth of the recordered earthquake
+//     var mag = data.features[i].properties.mag
+//     var d   = data.features[i].geometry.coordinates[2]
+
+//     // console.log(`Q ${i}\tmag = ${mag[i]}\td = ${d[i]}`)
+
+// }
 
 
 // ----------------------------------------------- FILTER/CONTROL SETUP ---------------------------------------------
