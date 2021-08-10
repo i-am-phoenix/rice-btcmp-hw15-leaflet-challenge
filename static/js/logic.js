@@ -8,7 +8,6 @@ var myMap = L.map("map", {
     }
 )
 
-
 // Create the tile layer that will be the background of our map and add to myMap
 var bgLayer = L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -17,11 +16,16 @@ var bgLayer = L.tileLayer(
     }
 ).addTo(myMap);
 
+// Read in geojson info
+d3.json(usgs_url).then(data => {console.log(data)})
+
+
 // ----------------------------------------------- FILTER/CONTROL SETUP ---------------------------------------------
 // Set up basemap variable
 var baseMap = {
     "Deafault" : bgLayer
 }
+
 L.control.layers(baseMap).addTo(myMap)
 
 
